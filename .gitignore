@@ -1,0 +1,5 @@
+# Output files
+*.exe
+
+# Temporary files
+tempCodeRunnerFile.cpp
