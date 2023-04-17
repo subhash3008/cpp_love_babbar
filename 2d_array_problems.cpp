@@ -167,6 +167,68 @@ vector<vector<int>> rotate_by_90_degree(vector<vector<int>> vect)
   return res;
 }
 
+
+// vector should be sorted row wise and every start of row 
+// should be more than end of previous row for ascending order
+bool binary_search(vector<vector<int>> vect, int target)
+{
+  int row = vect.size();
+  int col = vect[0].size();
+
+  int start = 0;
+  int end = (row * col - 1);
+
+  int mid = start + ((end - start) / 2);
+
+  while (start <= end)
+  {
+    int el = vect[mid/col][mid%col]; 
+    if (el == target)
+    {
+      return true;
+    }
+    else if (el < target)
+    {
+      start = mid + 1;
+    }
+    else if (el > target)
+    {
+      end = mid - 1;
+    }
+    mid = start + ((end - start) / 2);
+  }
+  return false;
+}
+
+
+// elements in both rows and columns are sorted 
+bool search_element_sorted_2(vector<vector<int>> vect, int target)
+{
+  int row = vect.size();
+  int col = vect[0].size();
+
+  int rowIndex = 0;
+  int colIndex = col - 1;
+
+  while ((rowIndex < row) && (colIndex >= 0))
+  {
+    int el = vect[rowIndex][colIndex];
+    if (el == target)
+    {
+      return true;
+    }
+    else if (el < target)
+    {
+      rowIndex++;
+    }
+    else if (el > target)
+    {
+      colIndex--;
+    }
+  }
+  return false;
+}
+
 int main()
 {
   // int arr[3][4] = {{1, 11, 111, 1111}, {2, 22, 222, 2222}, {3, 33, 333, 3333}};
@@ -239,8 +301,15 @@ int main()
   // }
   // cout << endl;
 
-  cout << "Rotating..." << endl;
-  print_vector(rotate_by_90_degree(vect));
+  // cout << "Rotating..." << endl;
+  // print_vector(rotate_by_90_degree(vect));
+
+  cout << "Element to search : ";
+  int target_el;
+  cin >> target_el;
+
+  // cout << (binary_search(vect, target_el) ? "Found" : "Not found") << endl;
+  cout << (search_element_sorted_2(vect, target_el) ? "Found" : "Not found") << endl;
 
   return 0;
 }
