@@ -79,18 +79,96 @@ void insertion_sort(int arr[], int start, int n)
   insertion_sort(arr, start + 1, n);
 }
 
+///////////////////////////////////////////////////////
+// Merge sort
+
+// int count = 0;             // for inversion count
+void merge_sorted_arr(int arr[], int start, int end)
+{
+  int mid = start + ((end - start) / 2);
+  int len1 = mid - start + 1;
+  int len2 = end - mid;
+
+  int *first = new int[len1];
+  int *second = new int[len2];
+
+  int mainArrIndex = start;
+  for (int i = 0; i < len1; ++i)
+  {
+    first[i] = arr[mainArrIndex++];
+  }
+
+  mainArrIndex = mid + 1;
+  for (int i = 0; i < len2; ++i)
+  {
+    second[i] = arr[mainArrIndex++];
+  }
+
+  int index1 = 0;
+  int index2 = 0;
+  mainArrIndex = start;
+  while (index1 < len1 && index2 < len2)
+  {
+    if (first[index1] < second[index2])
+    {
+      arr[mainArrIndex++] = first[index1++];
+    }
+    else
+    {
+      // count += (len1 - index1);      // for inversion count
+      arr[mainArrIndex++] = second[index2++];
+    }
+  }
+
+  while (index1 < len1)
+  {
+    arr[mainArrIndex++] = first[index1++];
+  }
+
+  while (index2 < len2)
+  {
+    arr[mainArrIndex++] = second[index2++];
+  }
+
+  delete[] first;
+  delete[] second;
+}
+
+void merge_sort(int arr[], int start, int end)
+{
+  if (start >= end)
+  {
+    return;
+  }
+
+  int mid = start + ((end - start) / 2);
+
+  // sort left part
+  merge_sort(arr, start, mid);
+
+  // sort right
+  merge_sort(arr, mid + 1, end);
+
+  // merge sorted array
+  merge_sorted_arr(arr, start, end);
+}
+
 
 int main()
 {
-  int arr[] = { 3, 2, 4, 6, 5, 8, 7, 11, 9};
-  int size = 9;
+  // int arr[] = {32, 46, 58, 17, 21, 9, 82};
+  int arr[] = {8, 4, 2, 1};
+  int size = 4;
 
   print_array(arr, size);
   cout << "Sorting..." << endl;
   // bubble_sort(arr, size);
   // selection_sort(arr, 0, size);
-  insertion_sort(arr, 1, size);
+  // insertion_sort(arr, 1, size);
+  merge_sort(arr, 0, size - 1);
   print_array(arr, size);
+
+  cout << "inverted count : " << count << endl;
 
   return 0;
 }
