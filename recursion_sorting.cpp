@@ -154,21 +154,87 @@ void merge_sort(int arr[], int start, int end)
 }
 
 
+/////////////////////////////////////////////
+// Quick Sort
+
+int partition(int arr[], int start, int end)
+{
+  int pivot = arr[start];
+  int count = 0;
+
+  for (int i = start + 1; i <= end; ++i)
+  {
+    if (arr[i] < pivot)
+    {
+      count++;
+    }
+  }
+
+  // correct place for pivot in the array
+  int pivotIndex = start + count;
+
+  swap(arr[start], arr[pivotIndex]);
+
+  int i = start;
+  int j = end;
+  
+  while (i < pivotIndex && j > pivotIndex)
+  {
+    while (arr[i] < pivot)
+    {
+      i++;
+    }
+
+    while (arr[j] > pivot)
+    {
+      j--;
+    }
+
+    if (i < pivotIndex && j > pivotIndex)
+    {
+      swap(arr[i++], arr[j--]);
+    }
+  }
+
+  return pivotIndex;
+}
+
+void quick_sort(int arr[], int start, int end)
+{
+  // base case
+  if (start >= end)
+  {
+    return;
+  }
+
+  // get partitionIndex after putting pivot at correct place
+  int partitionIndex = partition(arr, start, end);
+
+  // sort left array
+  quick_sort(arr, start, partitionIndex - 1);
+
+  // sort right part of array
+  quick_sort(arr, partitionIndex + 1, end);
+}
+
+
 int main()
 {
-  // int arr[] = {32, 46, 58, 17, 21, 9, 82};
-  int arr[] = {8, 4, 2, 1};
-  int size = 4;
+  int arr[] = {32, 46, 58, 17, 21, 9, 82};
+  int size = 7;
 
   print_array(arr, size);
   cout << "Sorting..." << endl;
   // bubble_sort(arr, size);
   // selection_sort(arr, 0, size);
   // insertion_sort(arr, 1, size);
-  merge_sort(arr, 0, size - 1);
-  print_array(arr, size);
+  // merge_sort(arr, 0, size - 1);
+  // print_array(arr, size);
 
-  cout << "inverted count : " << count << endl;
+  // cout << "inverted count : " << count << endl;
+
+  quick_sort(arr, 0, size - 1);
+  print_array(arr, size);
 
   return 0;
 }
