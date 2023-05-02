@@ -148,6 +148,105 @@ void phone_mapping_subsets(string digits, string out, int index, vector<string>&
   }
 }
 
+////////////////////////////////////////////////
+// Permutations
+void permutations(string str, vector<string>& res, int index)
+{
+  // base case
+  if (index >= str.length())
+  {
+    res.push_back(str);
+    return;
+  }
+
+  for (int i = index; i < str.length(); ++i)
+  {
+    swap(str[i], str[index]);
+    permutations(str, res, index + 1);
+
+    // backtrack
+    swap(str[i], str[index]);
+  }
+}
+
+///////////////////////////////////////////////////
+// RAT IN A MAZE
+
+bool is_path_possible(int x, int y, int n, vector<vector<int>> visited, vector<vector<int>> m)
+{
+  if (((x >= 0 && x < n) && (y >= 0 && y < n)) &&
+    (visited[x][y] == 0) &&
+    (m[x][y] == 1))
+  {
+    return true;
+  }
+  return false;
+
+}
+
+void get_path(
+  vector<vector<int>>& m,
+  int n,
+  vector<string>& res,
+  int x,
+  int y,
+  vector<vector<int>> visited,
+  string path)
+{
+  // base case
+  if ((x == n - 1) && (y == n - 1))
+  {
+    res.push_back(path);
+    return;
+  }
+
+  visited[x][y] = 1;
+
+  // 4 Possible paths - Down, Left, Right, Up
+  int new_x, new_y;
+  // Down
+  new_x = x + 1;
+  new_y = y;
+  if (is_path_possible(new_x, new_y, n, visited, m))
+  {
+    path.push_back('D');
+    get_path(m, n, res, new_x, new_y, visited, path);
+    path.pop_back();
+  }
+
+  // Left
+  new_x = x;
+  new_y = y - 1;
+  if (is_path_possible(new_x, new_y, n, visited, m))
+  {
+    path.push_back('L');
+    get_path(m, n, res, new_x, new_y, visited, path);
+    path.pop_back();
+  }
+
+  // Up
+  new_x = x - 1;
+  new_y = y;
+  if (is_path_possible(new_x, new_y, n, visited, m))
+  {
+    path.push_back('D');
+    get_path(m, n, res, new_x, new_y, visited, path);
+    path.pop_back();
+  }
+
+  // Right
+  new_x = x;
+  new_y = y + 1;
+  if (is_path_possible(new_x, new_y, n, visited, m))
+  {
+    path.push_back('R');
+    get_path(m, n, res, new_x, new_y, visited, path);
+    path.pop_back();
+  }
+
+  visited[x][y] = 0;
+}
+
 int main()
 {
   // string s;
@@ -189,13 +288,46 @@ int main()
   // print_string_vec(res);
 
   // Phone Keypad Mapping string subsets
-  string digits = "78";
-  vector<string> res;
-  string output;
-  int index = 0;
-  vector<string> mappings{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+  // string digits = "78";
+  // vector<string> res;
+  // string output;
+  // int index = 0;
+  // vector<string> mappings{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-  phone_mapping_subsets(digits, output, index, res, mappings);
+  // phone_mapping_subsets(digits, output, index, res, mappings);
+  // print_string_vec(res);
+
+  // permutations
+  // vector<string> res;
+  // string str = "abc";
+  // int index = 0;
+  // permutations(str, res, index);
+  // print_string_vec(res);
+
+  // RAT IN A MAZE
+  vector<vector<int>> maze
+  {
+    {1, 0, 0, 0},
+    {1, 1, 0, 1},
+    {1, 1, 0, 0},
+    {0, 1, 1, 1}
+  };
+  int n = 4;
+
+  vector<string> res;
+  string path = "";
+  int src_x = 0;
+  int src_y = 0;
+  vector<vector<int>> visited = maze;
+  for (int i = 0; i < n; ++i)
+  {
+    for (int j = 0; j < n; ++j)
+    {
+      visited[i][j] = 0;
+    }
+  }
+
+  get_path(maze, n, res, src_x, src_y, visited, path);
   print_string_vec(res);
 
   return 0;
