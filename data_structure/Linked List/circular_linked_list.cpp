@@ -23,7 +23,7 @@ public:
       delete next;
       this->next = NULL;
     }
-    cout << "Deleted Data : " << endl;
+    cout << "Deleted Data : " << val << endl;
   }
 };
 
@@ -81,6 +81,11 @@ void delete_node(Node* &tail, int el)
     }
 
     prev->next = curr->next;
+    if (tail == curr)
+    {
+      tail = prev->next;
+    }
+
     curr->next = NULL;
     delete curr;
   }
@@ -102,8 +107,16 @@ int main()
   insert_node(tail, 1, 10);
   print_cll(tail);
 
+  delete_node(tail, 3);
+  print_cll(tail);
+
+  delete_node(tail, 2);
+  print_cll(tail);
+
   delete_node(tail, 1);
   print_cll(tail);
+
+  delete_node(tail, 10);
 
   return 0;
 }
