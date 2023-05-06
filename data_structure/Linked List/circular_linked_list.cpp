@@ -51,6 +51,11 @@ void insert_node(Node* &tail, int el, int d)
 
 void print_cll(Node* &tail)
 {
+  if (tail == NULL)
+  {
+    cout << "List is empty" << endl;
+    return;
+  }
   Node* temp = tail;
   do
   {
@@ -81,9 +86,13 @@ void delete_node(Node* &tail, int el)
     }
 
     prev->next = curr->next;
-    if (tail == curr)
+    if (prev == curr)
     {
-      tail = prev->next;
+      tail == NULL;
+    }
+    else if (tail == curr)
+    {
+      tail = prev;
     }
 
     curr->next = NULL;
@@ -117,6 +126,7 @@ int main()
   print_cll(tail);
 
   delete_node(tail, 10);
+  print_cll(tail);
 
   return 0;
 }

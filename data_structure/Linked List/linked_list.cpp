@@ -104,28 +104,28 @@ void print_linked_list(Node* &head)
 }
 
 
-int main()
-{
-  Node* head = new Node(10);
-  Node* tail = head; // as there exist only one node
-  print_linked_list(head);
-  insert_at_head(head, 20);
-  print_linked_list(head);
-  insert_at_head(head, 30);
-  print_linked_list(head);
-  insert_at_tail(tail, 20);
-  print_linked_list(head);
-  insert_at_tail(tail, 30);
-  print_linked_list(head);
+// int main()
+// {
+//   Node* head = new Node(10);
+//   Node* tail = head; // as there exist only one node
+//   print_linked_list(head);
+//   insert_at_head(head, 20);
+//   print_linked_list(head);
+//   insert_at_head(head, 30);
+//   print_linked_list(head);
+//   insert_at_tail(tail, 20);
+//   print_linked_list(head);
+//   insert_at_tail(tail, 30);
+//   print_linked_list(head);
 
-  insert_at_position(head, tail, 4, 5);
-  print_linked_list(head);
+//   insert_at_position(head, tail, 4, 5);
+//   print_linked_list(head);
 
-  insert_at_position(head, tail, 7, 10);
-  print_linked_list(head);
+//   insert_at_position(head, tail, 7, 10);
+//   print_linked_list(head);
 
-  delete_node(head, 5);
-  print_linked_list(head);
+//   delete_node(head, 5);
+//   print_linked_list(head);
 
-  return 0;
-}
+//   return 0;
+// }
