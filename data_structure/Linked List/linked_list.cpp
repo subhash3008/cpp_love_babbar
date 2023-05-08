@@ -59,6 +59,12 @@ void insert_at_position(Node* &head, Node* &tail, int pos, int d)
   {
     traverse_node = traverse_node->next;
   }
+
+  if (traverse_node->next == NULL)
+  {
+    insert_at_tail(tail, d);
+    return;
+  }
   temp->next = traverse_node->next;
   traverse_node->next = temp;
 }

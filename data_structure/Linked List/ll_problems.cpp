@@ -1,4 +1,7 @@
 #include "linked_list.cpp"
+// #include "circular_linked_list.cpp" // To test for cicrular LL
+
+#include <map>
 
 //////////////////////////////////////
 // REVERSE A LINKED LIST
@@ -116,24 +119,188 @@ Node* k_reverse_ll(Node* head, int k)
   return prev;
 }
 
+
+/////////////////////////////////////////
+// Check if a List is circular
+bool is_circular_ll(Node* head) {
+  if (head == NULL)
+  {
+    return true;
+  }
+
+  if (head->next == NULL)
+  {
+    return false;
+  }
+  else if (head->next == head)
+  {
+    return true;
+  }
+
+  Node* slow = head;
+  Node* fast = head;
+  bool isCircular = false;
+
+  while (fast != NULL && fast->next != NULL)
+  {
+    slow = slow->next;
+    fast = fast->next->next;
+    if (slow->data == fast->data)
+    {
+      isCircular = true;
+      break;
+    }
+  }
+
+  return isCircular;
+}
+
+bool is_circular_ll2(Node *head)
+{
+  if (head == NULL)
+  {
+    return true;
+  }
+
+  if (head->next == NULL)
+  {
+    return false;
+  }
+  else if (head ->next == head)
+  {
+    return true;
+  }
+
+  Node *temp = head;
+  while (temp != NULL && temp != head)
+  {
+    temp = temp->next;
+  }
+
+  if (temp == NULL)
+  {
+    return false;
+  }
+  else if (temp == head)
+  {
+    return true;
+  }
+}
+
+/////////////////////////////////////////////
+// Detect a cycle in the loop
+
+bool is_cycle_present(Node* head)
+{
+  if (head == NULL)
+  {
+    return false;
+  }
+  
+  map<Node*, bool> visited;
+  Node *temp = head;
+
+  while (temp != NULL)
+  {
+    if (visited[temp] == true)
+    {
+      return true;
+    }
+    else
+    {
+      visited[temp] = true;
+    }
+    temp = temp->next;
+  }
+
+  return false;
+}
+
+
+Node* is_cycle_present_floyd(Node *head)
+{
+  if (head == NULL)
+  {
+    return NULL;
+  }
+
+  Node *slow = head;
+  Node *fast = head;
+
+  while (slow != NULL && fast != NULL)
+  {
+    slow = slow->next;
+    fast = fast->next;
+    if (fast != NULL)
+    {
+      fast = fast->next;
+    }
+    if (slow == fast)
+    {
+      return slow;
+    }
+  }
+  return NULL;
+}
+
+Node* get_starting_node_of_cycle(Node *head)
+{
+  if (head == NULL)
+  {
+    return NULL;
+  }
+
+  Node *intersection = is_cycle_present_floyd(head);
+
+  Node *slow = head;
+  while (slow != intersection)
+  {
+    slow = slow->next;
+    intersection = intersection->next;
+  }
+
+  return slow;
+}
+
+void remove_cycle_ll(Node *head)
+{
+  if (head == NULL)
+  {
+    return;
+  }
+
+  Node* start_node = get_starting_node_of_cycle(head);
+  Node* temp = start_node;
+
+  while (temp->next != start_node)
+  {
+    temp = temp->next;
+  }
+
+  cout << "removing cycle from node : " << temp->data;
+  cout << " pointing to " << start_node->data << endl;
+  temp->next = NULL;
+
+}
+
+
 int main()
 {
-  Node* head = new Node(10);
+  Node* head = new Node(1);
   Node* tail = head; // as there exist only one node
   print_linked_list(head);
-  insert_at_head(head, 20);
+  insert_at_head(head, 2);
   print_linked_list(head);
-  insert_at_head(head, 30);
+  insert_at_head(head, 3);
   print_linked_list(head);
-  insert_at_tail(tail, 20);
+  insert_at_tail(tail, 4);
   print_linked_list(head);
-  insert_at_tail(tail, 30);
-  print_linked_list(head);
-
-  insert_at_position(head, tail, 4, 5);
+  insert_at_tail(tail, 5);
   print_linked_list(head);
 
-  insert_at_position(head, tail, 7, 10);
+  insert_at_position(head, tail, 4, 6);
+  print_linked_list(head);
+  insert_at_position(head, tail, 7, 7);
   print_linked_list(head);
 
   // REVERSE A LINKED LIST
@@ -153,9 +320,32 @@ int main()
   // cout << "data at middle after addition: " << middle->data << endl;
 
   // REVERSE a linked list in K-Groups
-  head = k_reverse_ll(head, 2);
-  cout << "Reversed : ";
-  print_linked_list(head);
+  // head = k_reverse_ll(head, 2);
+  // cout << "Reversed : ";
+  // print_linked_list(head);
+
+  // Check if a linked list is circular
+  // Node *tail = NULL;
+  // insert_node(tail, 5, 3);
+  // print_cll(tail);
+  // insert_node(tail, 3, 2);
+  // print_cll(tail);
+  // insert_node(tail, 2, 1);
+  // print_cll(tail);
+  // cout << "Is Circular ?? " << (is_circular_ll(tail) ? "Yes" : "No") << endl;
+
+  // Detect a cycle in the loop
+  tail->next = head->next;  // to create a cycle in the LL
+  bool is_present = is_cycle_present(head);
+  cout << "Is Cycle Present ?? " << (is_present ? "Yes" : "No") << endl;
+  if (is_present)
+  {
+    Node *start = get_starting_node_of_cycle(head);
+    cout << "Starting node of cycle : " << start->data << endl;
+    remove_cycle_ll(head);
+    is_present = is_cycle_present(head);
+    cout << "Is Cycle Present ?? " << (is_present ? "Yes" : "No") << endl;
+  }
 
   return 0;
 }

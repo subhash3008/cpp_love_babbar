@@ -100,33 +100,33 @@ void delete_node(Node* &tail, int el)
   }
 }
 
-int main()
-{
-  Node *tail = NULL;
+// int main()
+// {
+//   Node *tail = NULL;
 
-  insert_node(tail, 5, 3);
-  print_cll(tail);
+//   insert_node(tail, 5, 3);
+//   print_cll(tail);
 
-  insert_node(tail, 3, 2);
-  print_cll(tail);
+//   insert_node(tail, 3, 2);
+//   print_cll(tail);
 
-  insert_node(tail, 2, 1);
-  print_cll(tail);
+//   insert_node(tail, 2, 1);
+//   print_cll(tail);
 
-  insert_node(tail, 1, 10);
-  print_cll(tail);
+//   insert_node(tail, 1, 10);
+//   print_cll(tail);
 
-  delete_node(tail, 3);
-  print_cll(tail);
+//   delete_node(tail, 3);
+//   print_cll(tail);
 
-  delete_node(tail, 2);
-  print_cll(tail);
+//   delete_node(tail, 2);
+//   print_cll(tail);
 
-  delete_node(tail, 1);
-  print_cll(tail);
+//   delete_node(tail, 1);
+//   print_cll(tail);
 
-  delete_node(tail, 10);
-  print_cll(tail);
+//   delete_node(tail, 10);
+//   print_cll(tail);
 
-  return 0;
-}
+//   return 0;
+// }
