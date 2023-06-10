@@ -23,7 +23,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: C:\\Mingw\\mingw32\\bin\\g++.exe"
+			"detail": "compiler: C:\\Mingw\\bin\\g++.exe"
 		}
 	]
 }
