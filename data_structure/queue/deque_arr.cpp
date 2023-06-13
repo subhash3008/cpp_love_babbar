@@ -5,6 +5,12 @@ using namespace std;
 /////////////////////////////////
 // Double ended queue implementation
 
+
+/**
+ * @brief Although there is a stl implementation
+ * exist for deque in header queue, it is better
+ * to implement it to learn it
+ */
 class Deque
 {
 private:
@@ -26,7 +32,7 @@ public:
   {
     // check if the queue is full
     if (((m_front == 0) && (m_rear == (m_size - 1))) ||
-      (m_rear == (m_front - 1) % (m_size - 1)))
+      (m_front != 0 && m_rear == (m_front - 1) % (m_size - 1)))
     {
       std::cout << "Deque is full" << endl;
       return false;
@@ -51,7 +57,7 @@ public:
   {
     // check if the queue is full
     if (((m_front == 0) && (m_rear == (m_size - 1))) ||
-      (m_rear == (m_front - 1) % (m_size - 1)))
+      (m_front != 0 && m_rear == (m_front - 1) % (m_size - 1)))
     {
       std::cout << "Deque is full" << endl;
       return false;
@@ -90,7 +96,7 @@ public:
       m_front = -1;
       m_rear = -1;
     }
-    else if (m_front = (m_size - 1)) // check for cyclic maintainance
+    else if (m_front == (m_size - 1)) // check for cyclic maintainance
     {
       m_front = 0;
     }
@@ -124,7 +130,7 @@ public:
     }
     else
     {
-      m_size++;
+      m_rear--;
     }
     return res;
   }
@@ -147,6 +153,15 @@ public:
       return INT8_MIN;
     }
     return m_arr[m_rear];
+  }
+
+  bool isEmpty()
+  {
+    if (m_front == -1)
+    {
+      return true;
+    }
+    return false;
   }
 
 };
@@ -175,6 +190,25 @@ int main()
   dq.pushRear(-2);
   std::cout << dq.front() << endl;
   std::cout << dq.back() << endl;
+
+  std::cout << "poppintg from back.." << endl;
+  dq.popRear();
+  std::cout << dq.front() << endl;
+  std::cout << dq.back() << endl;
+
+  std::cout << "inserting -2 from front.." << endl;
+  dq.pushFront(-2);
+  std::cout << dq.front() << endl;
+  std::cout << dq.back() << endl;
+
+  dq.popFront();
+  dq.popFront();
+  dq.popFront();
+  dq.popFront();
+  dq.popFront();
+  std::cout << dq.front() << endl;
+  std::cout << dq.back() << endl;
+  dq.popFront();
 
   return 0;
 }
